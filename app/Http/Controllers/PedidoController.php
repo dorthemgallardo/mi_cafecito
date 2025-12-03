@@ -16,6 +16,10 @@ class PedidoController extends Controller
         $ordenado = Ordenado::orderBy('nombre','asc')->get();
         return view('generarPedido', compact('ordenado'));
   }
+  public function getPedido(){
+    $pedidos = Pedido::orderBy('id','asc')->get();
+    return view('pedidos',compact('pedidos'));
+  }
   public function agregarProducto($id){
         $ordenado = new Ordenado();
         $producto = Producto::find($id);

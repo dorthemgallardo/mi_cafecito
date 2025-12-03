@@ -23,4 +23,4 @@ Route::get('/menosCantidad/{id}',[PedidoController::class,'menosCantidad']);
 Route::get('/eliminarPedido/{id}',[PedidoController::class,'eliminarPedido']);
 
 Route::post('/grabarPedido',[PedidoController::class,'grabarPedido']);
-Route::get('/pedidos',[PedidoController::class,'getOrdenado']);
+Route::get('/pedidos',[PedidoController::class,'getPedido']);
