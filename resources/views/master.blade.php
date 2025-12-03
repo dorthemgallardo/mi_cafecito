@@ -27,6 +27,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{{url('/ordenarProductos')}}">Productos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{url('/pedidos')}}">Pedidos</a>
+                    </li>
                 </ul>
             </div>
         </div>

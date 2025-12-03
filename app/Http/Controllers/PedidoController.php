@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use App\Models\Pedido;
 use App\Models\Ordenado;
+use App\Models\Detalle;
 use Illuminate\Http\Request;
 
 
@@ -38,8 +39,44 @@ public function menosCantidad($id){
         if($ordenado->cantidad<1){
             $ordenado->delete();
         }
-        $ordenado->save();
         return redirect('/generarPedido');
     }
 
+    public function grabarPedido(Request $request){
+        //grabar los datos del pedido
+        $pedido = new Pedido();
+        $datos = $request->input();
+        //falta verificar que el total no este en cero
+        $pedido->nombre= $datos["nombre"];
+        $pedido->origen= $datos["origen"];
+        $pedido->fecha= now();
+        $pedido->total= $datos["total"];
+        $pedido->save();
+        //grabar los productos ordenados en detalle
+       
+          $ordenado = Ordenado::orderBy('nombre','asc')->get();
+           //recorrer los ordenados
+           foreach($ordenado as $ordenados){
+              $detalle = new Detalle();
+              $detalle->producto_id= $ordenados->id;
+              $detalle->nombre= $ordenados->nombre;
+              $detalle->precio= $ordenados->precio;
+              $detalle->imagen= $ordenados->imagen;
+              $detalle->cantidad= $ordenados->cantidad;
+              $detalle->pedido_id= $pedido->id;
+              $detalle->save();
+           }
+           //eliminar los ordenados
+           foreach($ordenado as $ordenados){
+               $ordenados->delete();
+           }
+        return redirect('/generarPedido');
+    }
+    public function eliminarPedido($id){
+        $pedido = Pedido::find($id);
+        $pedido->delete();  
+        Detalle::where('pedido_id', $id)->delete();
+        return redirect('/pedidos');
+
+    }
 }
