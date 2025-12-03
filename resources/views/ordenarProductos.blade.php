@@ -5,7 +5,12 @@
 
 
 @section('titulo')
-  <h1>Ordenar Productos</h1>
+
+<div class="row">
+  <h1 class="col-8 align-self-start">Ordenar Productos</h1>
+  <a href="{{url('/generarPedido')}}"
+    class="btn btn-success btn-sm col-3 align-self-start">Ver Pedido</a>
+</div>
 @stop
 
 
